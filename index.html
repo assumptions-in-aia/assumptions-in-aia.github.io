@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examining Assumptions in the AIA — Workshop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1e3765;
+      --lavender: #efe9f7;
+      --lavender-dark: #ddd4ef;
+      --white: #ffffff;
+      --text-secondary: #4a5c80;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--navy);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      padding: 16px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--lavender-dark);
+      gap: 20px;
+    }
+
+    nav .wordmark {
+      font-family: 'Crimson Pro', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--navy);
+      flex-shrink: 0;
+    }
+
+    nav .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav .conference-tag {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 14px;
+      background: var(--lavender);
+      border-radius: 4px;
+    }
+
+    nav .conference-tag .conf-logo {
+      height: 28px;
+      width: auto;
+      display: block;
+    }
+
+    nav .conference-tag .conf-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      white-space: nowrap;
+    }
+
+    nav a.register-nav {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-decoration: none;
+      border: 1.5px solid var(--navy);
+      padding: 7px 16px;
+      border-radius: 3px;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    nav a.register-nav:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 90px 40px 80px;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .hero .eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-family: 'Crimson Pro', serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--navy);
+      margin-bottom: 28px;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.75;
+    }
+
+    /* ── DETAILS BAND ── */
+    .details-band {
+      background: var(--lavender);
+      padding: 28px 40px;
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .details-band .detail {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .details-band .detail-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .details-band .detail-value {
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      padding: 72px 40px;
+      max-width: 780px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--lavender-dark);
+    }
+
+    .section h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+
+    .section p {
+      font-size: 0.97rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .section p:last-child { margin-bottom: 0; }
+
+    /* ── CARD GRID ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .card {
+      background: var(--lavender);
+      border-radius: 6px;
+      padding: 24px 22px;
+    }
+
+    .card h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 0;
+    }
+
+    /* ── AUDIENCE ── */
+    .audience-list {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .audience-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 20px;
+      background: var(--lavender);
+      border-radius: 6px;
+    }
+
+    .audience-item .role {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--navy);
+      min-width: 110px;
+    }
+
+    .audience-item .role-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--navy);
+      padding: 72px 40px;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+
+    .cta-section p {
+      font-size: 0.95rem;
+      color: var(--lavender);
+      margin-bottom: 32px;
+    }
+
+    .cta-section a.cta-btn {
+      display: inline-block;
+      background: var(--lavender);
+      color: var(--navy);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      padding: 14px 36px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .cta-section a.cta-btn:hover { background: var(--white); }
+
+    /* ── PEOPLE SECTIONS ── */
+    .people-section {
+      padding: 72px 40px;
+      max-width: 900px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--lavender-dark);
+    }
+
+    .people-section h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 36px;
+    }
+
+    /* Organizers grid — 3 columns */
+    .organizers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .person-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .person-card .photo {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--lavender);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .person-card .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .person-card .person-name {
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .person-card .person-affiliation {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-top: -8px;
+    }
+
+    .person-card .person-bio {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Invited speaker — full width, more prominent */
+    .speaker-card {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      background: var(--lavender);
+      border-radius: 8px;
+      padding: 28px;
+    }
+
+    .speaker-card .photo {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: var(--lavender-dark);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .speaker-card .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .speaker-card .speaker-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .speaker-card .speaker-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .speaker-card .person-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .speaker-card .person-affiliation {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .speaker-card .person-bio {
+      margin-top: 6px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* ── ORG LOGOS ── */
+    .org-logos-section {
+      padding: 52px 40px;
+      max-width: 900px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--lavender-dark);
+    }
+
+    .org-logos-section .logos-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .logos-row {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      flex-wrap: wrap;
+    }
+
+    .logo-slot img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .logo-slot img:hover { opacity: 1; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 40px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 14px 20px; flex-wrap: wrap; }
+      nav .conference-tag .conf-name { display: none; }
+      .hero { padding: 56px 20px 48px; }
+      .details-band { padding: 24px 20px; gap: 20px; }
+      .section, .people-section, .org-logos-section { padding: 52px 20px; }
+      .cta-section { padding: 56px 20px; }
+      .organizers-grid { grid-template-columns: 1fr 1fr; }
+      .speaker-card { flex-direction: column; }
+      .audience-item { flex-direction: column; gap: 6px; }
+      footer { padding: 24px 20px; }
+    }
+
+    @media (max-width: 440px) {
+      .organizers-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="wordmark">Assumptions in the AIA</span>
+    <div class="nav-right">
+      <div class="conference-tag">
+        <img class="conf-logo" src="logo-faact-craft.png" alt="FAACT Craft 2026 logo" />
+        <span class="conf-name">FAACT Craft 2026</span>
+      </div>
+      <a class="register-nav" href="YOUR_GOOGLE_FORM_LINK" target="_blank">Express Interest</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="eyebrow">Workshop · FAACT Craft 2026</p>
+    <h1>Examining Assumptions in the Algorithmic Impact Assessment</h1>
+    <p>
+      Canada's Algorithmic Impact Assessment is a tool designed to surface risk — but like any instrument, it carries assumptions of its own. This workshop investigates what those assumptions are, where they sit, and what practitioners, advocates, and the state can do about them.
+    </p>
+  </div>
+
+  <!-- DETAILS BAND -->
+  <div class="details-band">
+    <div class="detail">
+      <span class="detail-label">Date</span>
+      <span class="detail-value">YOUR DATE HERE</span>
+    </div>
+    <div class="detail">
+      <span class="detail-label">Time</span>
+      <span class="detail-value">YOUR TIME HERE</span>
+    </div>
+    <div class="detail">
+      <span class="detail-label">Venue</span>
+      <span class="detail-value">YOUR VENUE HERE</span>
+    </div>
+    <div class="detail">
+      <span class="detail-label">Format</span>
+      <span class="detail-value">In-person, participatory</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section">
+    <h2>About the Workshop</h2>
+    <p>
+      The AIA exists as a questionnaire that departments must complete before deploying automated decision systems. But completing or scrutinizing an AIA requires more than filling in answers — it requires understanding the assumptions baked into the questions themselves, the scoring logic, and the instrument's framing of what counts as risk.
+    </p>
+    <p>
+      This session takes the AIA as a given. Rather than evaluating whether the instrument should exist or how it ought to have been designed, the focus is on what can be done with the tool as it currently stands — by those who complete it, those who challenge it, and those who design it.
+    </p>
+  </div>
+
+  <!-- WHAT TO EXPECT -->
+  <div class="section">
+    <h2>What to Expect</h2>
+    <p>Participants will work through a structured framework for identifying and labeling assumptions in the AIA, applied to real questions from the instrument. The session is participatory — responses will be solicited either by speaking aloud or by scanning the QR code displayed on screen to submit anonymously.</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>A Working Framework</h3>
+        <p>A label structure that classifies assumptions by where they sit and what acting on them makes possible.</p>
+      </div>
+      <div class="card">
+        <h3>Applied Analysis</h3>
+        <p>Live examination of specific AIA questions and responses, with the framework applied in real time.</p>
+      </div>
+      <div class="card">
+        <h3>Concrete Outputs</h3>
+        <p>For each assumption identified: a reconstructed question, a rephrased choice, or a practice for the respondent — depending on where the assumption lives.</p>
+      </div>
+      <div class="card">
+        <h3>Open Discussion</h3>
+        <p>Space to challenge, extend, or push back on the framework and its application.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHO SHOULD ATTEND -->
+  <div class="section">
+    <h2>Who Should Attend</h2>
+    <p>This session is designed for three kinds of participants, each of whom relates to the AIA differently.</p>
+    <div class="audience-list">
+      <div class="audience-item">
+        <span class="role">Practitioners</span>
+        <span class="role-desc">Public servants and teams who complete the AIA on behalf of a project, and who bear responsibility for how the instrument is filled out.</span>
+      </div>
+      <div class="audience-item">
+        <span class="role">Advocates</span>
+        <span class="role-desc">Those who scrutinize a completed AIA on behalf of affected parties, with the aim of identifying where assumptions obscure or misrepresent a system's actual impact.</span>
+      </div>
+      <div class="audience-item">
+        <span class="role">The State</span>
+        <span class="role-desc">Policy designers and researchers interested in how the instrument itself could be improved — through better questions, clearer scoring, or more explicit framing.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>Interested in Attending?</h2>
+    <p>Fill out the form to express your interest. Spots are limited.</p>
+    <a class="cta-btn" href="YOUR_GOOGLE_FORM_LINK" target="_blank">Express Interest</a>
+  </div>
+
+  <!-- INVITED SPEAKER -->
+  <div class="people-section">
+    <h2>Invited Speaker</h2>
+    <div class="speaker-card">
+      <div class="photo">
+        <img src="speaker-photo.jpg" alt="Speaker Name" />
+      </div>
+      <div class="speaker-info">
+        <span class="speaker-label">Invited Speaker</span>
+        <span class="person-name">Speaker Full Name</span>
+        <span class="person-affiliation">Title · Institution / Organization</span>
+        <p class="person-bio">
+          A short bio of the invited speaker goes here. This can include their research focus, relevant expertise, and why they are contributing to this session. Two to four sentences is plenty.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORGANIZERS -->
+  <div class="people-section">
+    <h2>Organizers</h2>
+    <div class="organizers-grid">
+
+      <div class="person-card">
+        <div class="photo"><img src="organizer1.jpg" alt="Organizer 1" /></div>
+        <span class="person-name">Organizer Name</span>
+        <span class="person-affiliation">Title · Institution</span>
+        <p class="person-bio">Short bio. Research interests, role in organizing this session, or relevant background. Two to three sentences.</p>
+      </div>
+
+      <div class="person-card">
+        <div class="photo"><img src="organizer2.jpg" alt="Organizer 2" /></div>
+        <span class="person-name">Organizer Name</span>
+        <span class="person-affiliation">Title · Institution</span>
+        <p class="person-bio">Short bio. Research interests, role in organizing this session, or relevant background. Two to three sentences.</p>
+      </div>
+
+      <div class="person-card">
+        <div class="photo"><img src="organizer3.jpg" alt="Organizer 3" /></div>
+        <span class="person-name">Organizer Name</span>
+        <span class="person-affiliation">Title · Institution</span>
+        <p class="person-bio">Short bio. Research interests, role in organizing this session, or relevant background. Two to three sentences.</p>
+      </div>
+
+      <div class="person-card">
+        <div class="photo"><img src="organizer4.jpg" alt="Organizer 4" /></div>
+        <span class="person-name">Organizer Name</span>
+        <span class="person-affiliation">Title · Institution</span>
+        <p class="person-bio">Short bio. Research interests, role in organizing this session, or relevant background. Two to three sentences.</p>
+      </div>
+
+      <div class="person-card">
+        <div class="photo"><img src="organizer5.jpg" alt="Organizer 5" /></div>
+        <span class="person-name">Organizer Name</span>
+        <span class="person-affiliation">Title · Institution</span>
+        <p class="person-bio">Short bio. Research interests, role in organizing this session, or relevant background. Two to three sentences.</p>
+      </div>
+
+      <div class="person-card">
+        <div class="photo"><img src="organizer6.jpg" alt="Organizer 6" /></div>
+        <span class="person-name">Organizer Name</span>
+        <span class="person-affiliation">Title · Institution</span>
+        <p class="person-bio">Short bio. Research interests, role in organizing this session, or relevant background. Two to three sentences.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ORG LOGOS -->
+  <div class="org-logos-section">
+    <span class="logos-label">Organized in association with</span>
+    <div class="logos-row">
+      <div class="logo-slot"><img src="logo-org1.png" alt="Organization 1" /></div>
+      <div class="logo-slot"><img src="logo-org2.png" alt="Organization 2" /></div>
+      <div class="logo-slot"><img src="logo-org3.png" alt="Organization 3" /></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    &copy; 2026 · Assumptions in the AIA Workshop · FAACT Craft 2026
+  </footer>
+
+</body>
+</html>
